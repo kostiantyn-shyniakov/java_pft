@@ -1,6 +1,6 @@
-package pft.addressbook;
+package pft.addressbook.model;
 
-public class AddNewData {
+public class ContactData {
     private final String firstname;
     private final String middlename;
     private final String lastname;
@@ -17,7 +17,7 @@ public class AddNewData {
     private final String phone2;
     private final String notes2;
 
-    public AddNewData(String firstname, String middlename, String lastname, String nickname, String title, String company, String address, String homephone, String email, String homepage, String birthyear, String ayyear, String address2, String phone2, String notes2) {
+    public ContactData(String firstname, String middlename, String lastname, String nickname, String title, String company, String address, String homephone, String email, String homepage, String birthyear, String ayyear, String address2, String phone2, String notes2) {
         this.firstname = firstname;
         this.middlename = middlename;
         this.lastname = lastname;
