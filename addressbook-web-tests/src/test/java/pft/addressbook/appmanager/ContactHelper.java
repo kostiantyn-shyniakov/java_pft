@@ -57,4 +57,46 @@ public class ContactHelper extends BaseHelper{
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
+    public void deleteContact() {
+        if (!isSelected(By.id("2"))) {
+            click(By.id("2"));
+        }
+
+        click(By.xpath("//*[@id='content']/form[2]/div[2]/input"));
+        wd.switchTo().alert().accept();
+    }
+
+    public void editContact(ContactData editContactData) {
+        click(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+        fillUpField(By.name("firstname"),editContactData.getFirstname());
+        fillUpField(By.name("middlename"),editContactData.getMiddlename());
+        fillUpField(By.name("lastname"),editContactData.getLastname());
+        fillUpField(By.name("nickname"),editContactData.getNickname());
+        fillUpField(By.name("title"),editContactData.getTitle());
+        fillUpField(By.name("company"),editContactData.getCompany());
+        fillUpField(By.name("address"),editContactData.getAddress());
+        fillUpField(By.name("home"),editContactData.getHomephone());
+        fillUpField(By.name("email"),editContactData.getEmail());
+        fillUpField(By.name("homepage"),editContactData.getHomepage());
+
+        if (!isSelected(By.xpath("//div[@id='content']/form/select[1]//option[18]"))) {
+            click(By.xpath("//div[@id='content']/form/select[1]//option[18]"));
+        }
+        if (!isSelected(By.xpath("//div[@id='content']/form/select[2]//option[10]"))) {
+            click(By.xpath("//div[@id='content']/form/select[2]//option[10]"));
+        }
+        fillUpField(By.name("byear"),editContactData.getBirthyear());
+
+        if (!isSelected(By.xpath("//div[@id='content']/form/select[3]//option[19]"))) {
+            click(By.xpath("//div[@id='content']/form/select[3]//option[19]"));
+        }
+        if (!isSelected(By.xpath("//div[@id='content']/form/select[4]//option[4]"))) {
+            click(By.xpath("//div[@id='content']/form/select[4]//option[4]"));
+        }
+        fillUpField(By.name("ayear"),editContactData.getAyyear());
+        fillUpField(By.name("address2"),editContactData.getAddress2());
+        fillUpField(By.name("phone2"),editContactData.getPhone2());
+        fillUpField(By.name("notes"),editContactData.getNotes2());
+        click(By.xpath("//*[@id='content']/form[1]/input[1]"));
+    }
 }

@@ -25,4 +25,21 @@ public class GroupHelper extends BaseHelper{
         click(By.name("submit"));
     }
 
+    public void deleteGroup() {
+        if (!isSelected(By.name("selected[]"))) {
+            click(By.name("selected[]"));
+        }
+        click(By.xpath("//*[@id='content']/form/input[2]"));
+    }
+
+    public void editGroup(GroupData groupData) {
+        if (!isSelected(By.name("selected[]"))) {
+            click(By.name("selected[]"));
+        }
+        click(By.xpath("//*[@id='content']/form/input[3]"));
+        fillUpField(By.name("group_name"), groupData.getGroupName());
+        fillUpField(By.name("group_header"), groupData.getGroupHeader());
+        fillUpField(By.name("group_footer"), groupData.getGroupFooter());
+        click(By.name("update"));
+    }
 }
