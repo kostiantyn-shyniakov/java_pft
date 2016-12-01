@@ -1,6 +1,7 @@
 package pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import pft.addressbook.model.ContactData;
 
@@ -9,7 +10,7 @@ import pft.addressbook.model.ContactData;
  */
 public class ContactHelper extends BaseHelper{
 
-    public ContactHelper(FirefoxDriver wd) {
+    public ContactHelper(WebDriver wd) {
         super(wd);
     }
 
@@ -58,10 +59,9 @@ public class ContactHelper extends BaseHelper{
     }
 
     public void deleteContact() {
-        if (!isSelected(By.id("2"))) {
-            click(By.id("2"));
+        if (!isSelected(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[1]/input"))) {
+            click(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[1]/input"));
         }
-
         click(By.xpath("//*[@id='content']/form[2]/div[2]/input"));
         wd.switchTo().alert().accept();
     }
