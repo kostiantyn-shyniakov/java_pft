@@ -10,7 +10,7 @@ import pft.addressbook.appmanager.ApplicationManager;
  */
 public class TestBase {
 
-    protected final ApplicationManager applicationManager = new ApplicationManager(BrowserType.IE);
+    protected final ApplicationManager applicationManager = new ApplicationManager(BrowserType.FIREFOX);
 
     @BeforeMethod
     public void setUp() throws Exception {

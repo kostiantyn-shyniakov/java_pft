@@ -16,10 +16,6 @@ public class ContactHelper extends BaseHelper{
         super(wd);
     }
 
-    public void returnAddressbookPage() {
-        click(By.cssSelector("th.sortable.fd-column-2"));
-    }
-
     public void createNewContact(ContactData addNewData) {
         click(By.linkText("add new"));
         fillContactForm(addNewData,true);
@@ -56,9 +52,8 @@ public class ContactHelper extends BaseHelper{
     }
 
     public void deleteContact() {
-        //if (!isSelected(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[1]/input"))) {
-            click(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[1]/input"));
-        //}
+
+        click(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[1]/input"));
         click(By.xpath("//*[@id='content']/form[2]/div[2]/input"));
         wd.switchTo().alert().accept();
     }
@@ -67,5 +62,9 @@ public class ContactHelper extends BaseHelper{
         click(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
         fillContactForm(editContactData,false);
         click(By.xpath("//*[@id='content']/form[1]/input[1]"));
+    }
+
+    public boolean isContactPresent() {
+        return isElementPresent(By.xpath("//*[@id='maintable']/tbody/tr[2]/td[1]/input"));
     }
 }
