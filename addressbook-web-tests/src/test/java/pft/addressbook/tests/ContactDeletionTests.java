@@ -1,7 +1,10 @@
 package pft.addressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pft.addressbook.model.ContactData;
+
+import java.util.List;
 
 /**
  * Created by kshyniakov on 30.11.2016.
@@ -12,9 +15,13 @@ public class ContactDeletionTests extends TestBase {
     public void testContactDeletion(){
         applicationManager.getNavigationHelper().goToHomePage();
         if (!applicationManager.getContactHelper().isContactPresent()){
-            applicationManager.getContactHelper().createNewContact(new ContactData("Delete", "F", "Client", "Nick", "Title", "Roga&Copyta", "Bakery str.", "745-69-34", "nothing@gmail.com", "google.com", "1980", "1990", "Second place Avenue", "SweetHome", "nothing"));
+            applicationManager.getContactHelper().createNewContact(new ContactData("Delete", "Client"));
             applicationManager.getNavigationHelper().goToHomePage();
         }
+        List<ContactData> before = applicationManager.getContactHelper().getContactList();
         applicationManager.getContactHelper().deleteContact();
+        before.remove(0);
+        List<ContactData> after = applicationManager.getContactHelper().getContactList();
+        Assert.assertEquals(after,before);
     }
 }

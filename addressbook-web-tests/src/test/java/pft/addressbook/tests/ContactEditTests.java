@@ -1,7 +1,10 @@
 package pft.addressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pft.addressbook.model.ContactData;
+
+import java.util.List;
 
 /**
  * Created by kshyniakov on 30.11.2016.
@@ -12,9 +15,17 @@ public class ContactEditTests extends TestBase {
     public void testEditContact(){
         applicationManager.getNavigationHelper().goToHomePage();
         if (!applicationManager.getContactHelper().isContactPresent()){
-            applicationManager.getContactHelper().createNewContact(new ContactData("Create", "F", "Client", "Nick", "Title", "Roga&Copyta", "Bakery str.", "745-69-34", "nothing@gmail.com", "google.com", "1980", "1990", "Second place Avenue", "SweetHome", "nothing"));
+            applicationManager.getContactHelper().createNewContact(new ContactData("Create", "Client"));
             applicationManager.getNavigationHelper().goToHomePage();
         }
-        applicationManager.getContactHelper().editContact(new ContactData("Edit", "F", "Clientius", "Nick", "Title", "Roga&Copyta", "Bakery str.", "745-69-34", "nothing@gmail.com", "google.com", "1980", "1990", "Second place Avenue", "SweetHome", "nothing"));
+        List<ContactData> before = applicationManager.getContactHelper().getContactList();
+        ContactData contact = new ContactData(before.get(0).getId(), "EditUp", "EditedNext");
+        applicationManager.getContactHelper().editContact(contact);
+        before.remove(0);
+        before.add(contact);
+        List<ContactData> after = applicationManager.getContactHelper().getContactList();
+        before.sort(byContactDataId);
+        after.sort(byContactDataId);
+        Assert.assertEquals(after,before);
     }
 }

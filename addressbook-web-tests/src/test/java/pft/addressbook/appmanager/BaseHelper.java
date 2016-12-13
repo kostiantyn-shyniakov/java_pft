@@ -1,9 +1,6 @@
 package pft.addressbook.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -21,12 +18,12 @@ public class BaseHelper {
     }
 
     protected void fillUpField(By locator, String text) {
-        click(locator);
+        WebElement e = wd.findElement(locator);
         if (text!=null) {
-            String existingText = wd.findElement(locator).getAttribute("value");
+            String existingText = e.getAttribute("value");
             if (!text.equals(existingText)) {
-                wd.findElement(locator).clear();
-                wd.findElement(locator).sendKeys(text);
+                e.clear();
+                e.sendKeys(text);
             }
         }
     }
