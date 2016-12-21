@@ -4,6 +4,15 @@ public class ContactData {
     private int id = 0;
     private String firstname;
     private String lastname;
+    private String homePhone;
+    private String mobilePhone;
+    private String workPhone;
+    private String allPhones;
+    private String allEmails;
+    private String email;
+    private String email2;
+    private String email3;
+    private String address;
 
     public String getFirstname() {
         return firstname;
@@ -11,6 +20,24 @@ public class ContactData {
 
     public String getLastname() {
         return lastname;
+    }
+
+    public String getAllEmails() {
+        return allEmails;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public ContactData withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public ContactData withAllEmails(String allEmails) {
+        this.allEmails = allEmails;
+        return this;
     }
 
     public ContactData withId(int id) {
@@ -28,8 +55,71 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withHomePhone(String lastname) {
+        this.homePhone = lastname;
+        return this;
+    }
+
+    public ContactData withMobilePhone(String lastname) {
+        this.mobilePhone = lastname;
+        return this;
+    }
+
+    public ContactData withWorkPhone(String lastname) {
+        this.workPhone = lastname;
+        return this;
+    }
+
+    public ContactData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public String getHomePhone() {
+        return homePhone;
+    }
+
+    public String getMobilePhone() {
+        return mobilePhone;
+    }
+
+    public String getWorkPhone() {
+        return workPhone;
+    }
+
+    public String getAllPhones() {
+        return allPhones;
+    }
+
+    public ContactData withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public ContactData withEmail2(String email2) {
+        this.email2 = email2;
+        return this;
+    }
+
+    public ContactData withEmail3(String email3) {
+        this.email3 = email3;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getEmail2() {
+        return email2;
+    }
+
+    public String getEmail3() {
+        return email3;
     }
 
     @Override
@@ -61,4 +151,5 @@ public class ContactData {
                 ", lastname='" + lastname + '\'' +
                 '}';
     }
+
 }

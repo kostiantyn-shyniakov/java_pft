@@ -27,11 +27,13 @@ public class GroupHelper extends BaseHelper{
         click(By.name("new"));
         fillGroupForm(groupData);
         click(By.name("submit"));
+        groupCache = null;
     }
 
     public void deleteGroup(GroupData group) {
         wd.findElement(By.cssSelector("input[value='"+group.getId()+"']")).click();
         click(By.xpath("//*[@id='content']/form/input[2]"));
+        groupCache = null;
     }
 
     public void edit(GroupData group) {
@@ -39,6 +41,7 @@ public class GroupHelper extends BaseHelper{
         click(By.xpath("//*[@id='content']/form/input[3]"));
         fillGroupForm(group);
         click(By.name("update"));
+        groupCache = null;
     }
 
     private void fillGroupForm(GroupData groupData) {
@@ -51,14 +54,17 @@ public class GroupHelper extends BaseHelper{
         return isElementPresent(By.name("selected[]"));
     }
 
+    private Groups groupCache = null;
+
     public Groups all() {
-        Groups groups = new Groups();
+        if (groupCache != null) return new Groups(groupCache);
+        groupCache = new Groups();
         List<WebElement> elements= wd.findElements(By.cssSelector("span.group"));
         for(WebElement e : elements){
             String name = e.getText();
             int id = Integer.parseInt(e.findElement(By.tagName("input")).getAttribute("value"));
-            groups.add(new GroupData().withId(id).withName(name));
+            groupCache.add(new GroupData().withId(id).withName(name));
         }
-        return groups;
+        return new Groups(groupCache);
     }
 }

@@ -1,5 +1,6 @@
 package pft.addressbook.tests;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pft.addressbook.model.ContactData;
 import pft.addressbook.model.Contacts;
@@ -11,13 +12,17 @@ import static org.hamcrest.MatcherAssert.*;
  */
 public class ContactDeletionTests extends TestBase {
 
-    @Test
-    public void testContactDeletion(){
+    @BeforeMethod
+    public void ensurePreconditions() {
         appManager.goTo().homePage();
         if (appManager.contact().all().size()==0){
             appManager.contact().create(new ContactData().withFirstname("Delete").withLastname("Client"));
             appManager.goTo().homePage();
         }
+    }
+
+    @Test
+    public void testContactDeletion(){
 
         Contacts before = appManager.contact().all();
         ContactData deletedContact = before.iterator().next();
@@ -26,4 +31,5 @@ public class ContactDeletionTests extends TestBase {
 
         assertThat(after, equalTo(before.without(deletedContact)));
     }
+
 }
