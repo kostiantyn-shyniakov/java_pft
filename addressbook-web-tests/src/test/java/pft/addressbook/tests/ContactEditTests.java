@@ -1,10 +1,10 @@
 package pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pft.addressbook.model.ContactData;
-
-import java.util.List;
+import pft.addressbook.model.Contacts;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 /**
  * Created by kshyniakov on 30.11.2016.
@@ -13,19 +13,18 @@ public class ContactEditTests extends TestBase {
 
     @Test
     public void testEditContact(){
-        applicationManager.getNavigationHelper().goToHomePage();
-        if (!applicationManager.getContactHelper().isContactPresent()){
-            applicationManager.getContactHelper().createNewContact(new ContactData("Create", "Client"));
-            applicationManager.getNavigationHelper().goToHomePage();
+        appManager.goTo().homePage();
+        if (appManager.contact().all().size()==0){
+            appManager.contact().create(new ContactData().withFirstname("Create").withLastname("Client"));
+            appManager.goTo().homePage();
         }
-        List<ContactData> before = applicationManager.getContactHelper().getContactList();
-        ContactData contact = new ContactData(before.get(0).getId(), "EditUp", "EditedNext");
-        applicationManager.getContactHelper().editContact(contact);
-        before.remove(0);
-        before.add(contact);
-        List<ContactData> after = applicationManager.getContactHelper().getContactList();
-        before.sort(byContactDataId);
-        after.sort(byContactDataId);
-        Assert.assertEquals(after,before);
+
+        Contacts before = appManager.contact().all();
+        ContactData editedContact = before.iterator().next();
+        ContactData contact = new ContactData().withId(editedContact.getId()).withFirstname("EditUp").withLastname("EditedNext");
+        appManager.contact().editContact(contact);
+        Contacts after = appManager.contact().all();
+
+        assertThat(after, equalTo(before.without(editedContact).withAdded(contact)));
     }
 }

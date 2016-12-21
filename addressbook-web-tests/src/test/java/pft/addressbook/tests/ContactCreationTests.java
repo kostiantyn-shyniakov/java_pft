@@ -1,25 +1,21 @@
 package pft.addressbook.tests;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pft.addressbook.model.ContactData;
-
-import java.util.List;
+import pft.addressbook.model.Contacts;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 public class ContactCreationTests extends TestBase {
 
     @Test
     public void testAddNew() {
-        applicationManager.getNavigationHelper().goToHomePage();
-        List<ContactData> before = applicationManager.getContactHelper().getContactList();
-        ContactData contact = new ContactData("SecondAdded", "UClient");
-        applicationManager.getContactHelper().createNewContact(contact);
-        List<ContactData> after = applicationManager.getContactHelper().getContactList();
+        appManager.goTo().homePage();
+        Contacts before = appManager.contact().all();
+        ContactData contact = new ContactData().withFirstname("SecondAdded").withLastname("UClient");
+        appManager.contact().create(contact);
+        Contacts after = appManager.contact().all();
 
-        contact.setId(after.stream().max(byContactDataId).get().getId());
-        before.add(contact);
-        before.sort(byContactDataId);
-        after.sort(byContactDataId);
-        Assert.assertEquals(after, before);
+        assertThat(after,equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     }
 
 }

@@ -1,21 +1,9 @@
 package pft.addressbook.model;
 
 public class ContactData {
-    private int id;
-    private final String firstname;
-    private final String lastname;
-
-    public ContactData(int id, String firstname, String lastname) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
-
-    public ContactData(String firstname, String lastname) {
-        this.id = 0;
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
+    private int id = 0;
+    private String firstname;
+    private String lastname;
 
     public String getFirstname() {
         return firstname;
@@ -25,12 +13,22 @@ public class ContactData {
         return lastname;
     }
 
-    public void setId(int id) {
+    public ContactData withId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public ContactData withFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
+    public ContactData withLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
     }
 
     public int getId() {
-
         return id;
     }
 

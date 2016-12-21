@@ -1,33 +1,36 @@
 package pft.addressbook.tests;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pft.addressbook.model.GroupData;
-
-import java.util.HashSet;
-import java.util.List;
+import pft.addressbook.model.Groups;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 /**
  * Created by kshyniakov on 30.11.2016.
  */
 public class GroupEditTests extends TestBase {
 
+    @BeforeMethod
+    public void ensurePreconditions(){
+        appManager.goTo().groupPage();
+        if (appManager.group().all().size()==0){
+            appManager.group().create(new GroupData().withName("edit group").withHeader("test group header").withFooter("test footer"));
+            appManager.group().returnToGroupPage();
+        }
+    }
+
     @Test
     public void testEditGroup(){
-        applicationManager.getNavigationHelper().gotoGroupPage();
-        if (!applicationManager.getGroupHelper().isGroupPresent()){
-            applicationManager.getGroupHelper().createNewGroup(new GroupData("edit group", "test group header", "test footer"));
-            applicationManager.getGroupHelper().returnToGroupPage();
-        }
-        List<GroupData> before = applicationManager.getGroupHelper().getGroupList();
-        GroupData group = new GroupData(before.get(before.size()-1).getId(), "edit test group", "new test group header", "new test footer");
-        applicationManager.getGroupHelper().editGroup(before.size()-1,group);
-        applicationManager.getGroupHelper().returnToGroupPage();
-        List<GroupData> after = applicationManager.getGroupHelper().getGroupList();
-        before.remove(before.size()-1);
-        before.add(group);
-        before.sort(byGroupDataId);
-        after.sort(byGroupDataId);
-        Assert.assertEquals(after,before);
+
+        Groups before = appManager.group().all();
+        GroupData editedGroup = before.iterator().next();
+        GroupData group = new GroupData().withId(editedGroup.getId()).withName("edit group").withHeader("new header").withFooter("new footer");
+        appManager.group().edit(group);
+        appManager.group().returnToGroupPage();
+        Groups after = appManager.group().all();
+
+        assertThat(after, equalTo(before.without(editedGroup).withAdded(group)));
     }
 }

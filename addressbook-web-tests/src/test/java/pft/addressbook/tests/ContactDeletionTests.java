@@ -1,10 +1,10 @@
 package pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pft.addressbook.model.ContactData;
-
-import java.util.List;
+import pft.addressbook.model.Contacts;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 /**
  * Created by kshyniakov on 30.11.2016.
@@ -13,15 +13,17 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion(){
-        applicationManager.getNavigationHelper().goToHomePage();
-        if (!applicationManager.getContactHelper().isContactPresent()){
-            applicationManager.getContactHelper().createNewContact(new ContactData("Delete", "Client"));
-            applicationManager.getNavigationHelper().goToHomePage();
+        appManager.goTo().homePage();
+        if (appManager.contact().all().size()==0){
+            appManager.contact().create(new ContactData().withFirstname("Delete").withLastname("Client"));
+            appManager.goTo().homePage();
         }
-        List<ContactData> before = applicationManager.getContactHelper().getContactList();
-        applicationManager.getContactHelper().deleteContact();
-        before.remove(0);
-        List<ContactData> after = applicationManager.getContactHelper().getContactList();
-        Assert.assertEquals(after,before);
+
+        Contacts before = appManager.contact().all();
+        ContactData deletedContact = before.iterator().next();
+        appManager.contact().deleteContact(deletedContact);
+        Contacts after = appManager.contact().all();
+
+        assertThat(after, equalTo(before.without(deletedContact)));
     }
 }
