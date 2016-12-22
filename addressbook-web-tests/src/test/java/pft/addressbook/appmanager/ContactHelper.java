@@ -76,4 +76,12 @@ public class ContactHelper extends BaseHelper{
                 .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work)
                 .withEmail(email).withEmail2(email2).withEmail3(email3);
     }
+
+    public ContactData detailedInfoForm(ContactData contact) {
+        click(By.cssSelector(String.format("a[href='view.php?id=%s']",contact.getId())));
+        String detailedInfo = wd.findElement(By.id("content")).getText();
+        wd.navigate().back();
+        return new ContactData().
+                withId(contact.getId()).withDetailedInfo(detailedInfo);
+    }
 }

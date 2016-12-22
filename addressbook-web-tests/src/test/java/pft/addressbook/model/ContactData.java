@@ -13,6 +13,11 @@ public class ContactData {
     private String email2;
     private String email3;
     private String address;
+    private String detailedInfo;
+
+    public String getDetailedInfo() {
+        return detailedInfo;
+    }
 
     public String getFirstname() {
         return firstname;
@@ -122,6 +127,11 @@ public class ContactData {
         return email3;
     }
 
+    public ContactData withDetailedInfo(String detailedInfo) {
+        this.detailedInfo = detailedInfo;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -151,5 +161,4 @@ public class ContactData {
                 ", lastname='" + lastname + '\'' +
                 '}';
     }
-
 }
