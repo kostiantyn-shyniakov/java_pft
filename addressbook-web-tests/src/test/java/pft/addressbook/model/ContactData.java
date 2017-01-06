@@ -1,8 +1,17 @@
 package pft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+import java.io.File;
+@XStreamAlias("contact")
 public class ContactData {
+    @XStreamOmitField
     private int id = 0;
+    @Expose
     private String firstname;
+    @Expose
     private String lastname;
     private String homePhone;
     private String mobilePhone;
@@ -12,8 +21,19 @@ public class ContactData {
     private String email;
     private String email2;
     private String email3;
+    @Expose
     private String address;
     private String detailedInfo;
+    private File photo;
+
+    public File getPhoto() {
+        return photo;
+    }
+
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
 
     public String getDetailedInfo() {
         return detailedInfo;
@@ -60,18 +80,18 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withHomePhone(String lastname) {
-        this.homePhone = lastname;
+    public ContactData withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
         return this;
     }
 
-    public ContactData withMobilePhone(String lastname) {
-        this.mobilePhone = lastname;
+    public ContactData withMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
         return this;
     }
 
-    public ContactData withWorkPhone(String lastname) {
-        this.workPhone = lastname;
+    public ContactData withWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
         return this;
     }
 

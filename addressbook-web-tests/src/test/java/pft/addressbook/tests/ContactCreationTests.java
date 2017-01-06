@@ -2,6 +2,9 @@ package pft.addressbook.tests;
 import org.testng.annotations.Test;
 import pft.addressbook.model.ContactData;
 import pft.addressbook.model.Contacts;
+
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
@@ -11,7 +14,8 @@ public class ContactCreationTests extends TestBase {
     public void testAddNew() {
         appManager.goTo().homePage();
         Contacts before = appManager.contact().all();
-        ContactData contact = new ContactData().withFirstname("SecondAdded").withLastname("UClient");
+        File photo = new File("src/test/resources/stru_clean.gif");
+        ContactData contact = new ContactData().withFirstname("SecondAdded").withLastname("UClient").withPhoto(photo);
         appManager.contact().create(contact);
         Contacts after = appManager.contact().all();
 

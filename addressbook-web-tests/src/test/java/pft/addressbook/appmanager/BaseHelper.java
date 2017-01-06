@@ -3,6 +3,8 @@ package pft.addressbook.appmanager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.File;
+
 /**
  * Created by kshyniakov on 28.11.2016.
  */
@@ -25,6 +27,12 @@ public class BaseHelper {
                 e.clear();
                 e.sendKeys(text);
             }
+        }
+    }
+
+    protected void attach(By locator, File file) {
+        if (file!=null) {
+            wd.findElement(locator).sendKeys(file.getAbsolutePath());
         }
     }
 

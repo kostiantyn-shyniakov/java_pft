@@ -25,6 +25,7 @@ public class ContactHelper extends BaseHelper{
     private void fillContactForm(ContactData contactData, boolean creation) {
         fillUpField(By.name("firstname"),contactData.getFirstname());
         fillUpField(By.name("lastname"),contactData.getLastname());
+        attach(By.name("photo"),contactData.getPhoto());
     }
 
     public void deleteContact(ContactData deletedContact) {

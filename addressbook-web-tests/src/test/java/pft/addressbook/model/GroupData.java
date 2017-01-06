@@ -1,10 +1,18 @@
 package pft.addressbook.model;
 
-public class GroupData {
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
+@XStreamAlias("group")
+public class GroupData {
+    @XStreamOmitField
     private int id=0;
+    @Expose
     private String groupName;
+    @Expose
     private String groupHeader;
+    @Expose
     private String groupFooter;
 
     public GroupData withId(int id) {
