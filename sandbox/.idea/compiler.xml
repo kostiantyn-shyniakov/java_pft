@@ -17,6 +17,8 @@
         <processorPath useClasspath="true" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.7" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="addressbook-web-tests" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
