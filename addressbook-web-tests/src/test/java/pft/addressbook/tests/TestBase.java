@@ -9,12 +9,10 @@ import pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
 
-/**
- * Created by kshyniakov on 28.11.2016.
- */
 public class TestBase {
 
-    protected static final ApplicationManager appManager = new ApplicationManager(BrowserType.FIREFOX);
+    protected static final ApplicationManager appManager
+            = new ApplicationManager(System.getProperty("browser",BrowserType.CHROME));
 
     @BeforeSuite
     public void setUp() throws Exception {

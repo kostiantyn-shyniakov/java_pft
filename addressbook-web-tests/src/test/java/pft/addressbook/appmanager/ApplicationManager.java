@@ -8,6 +8,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -15,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ApplicationManager {
 
+    private final Properties properties;
     WebDriver wd;
 
     private NavigationHelper navigationHelper;
@@ -23,11 +29,13 @@ public class ApplicationManager {
     private String browser;
 
     public ApplicationManager(String browser) {
-
         this.browser = browser;
+        properties = new Properties();
     }
 
-    public void init() {
+    public void init() throws IOException {
+        String target = System.getProperty("target","local");
+        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties",target))));
         if (browser.equals(BrowserType.FIREFOX)){
             wd = new FirefoxDriver();
         } else if (browser.equals(BrowserType.CHROME)){
@@ -40,19 +48,19 @@ public class ApplicationManager {
         groupHelper = new GroupHelper(wd);
         contactHelper = new ContactHelper(wd);
         navigationHelper = new NavigationHelper(wd);
-        login();
+        login(properties.getProperty("web.adminLogin"),properties.getProperty("web.adminPassword"));
     }
 
-    private void login() {
-        wd.get("http://localhost/addressbook/");
+    private void login(String login, String password) {
+        wd.get(properties.getProperty("web.baseUrl"));
         WebElement e = wd.findElement(By.name("user"));
         e.click();
         e.clear();
-        e.sendKeys("admin");
+        e.sendKeys(login);
         e = wd.findElement(By.name("pass"));
         e.click();
         e.clear();
-        e.sendKeys("secret");
+        e.sendKeys(password);
         wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
     }
 
