@@ -3,35 +3,61 @@ package pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 @XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private int id = 0;
     @Expose
-    private String firstname;
+    @Column(name = "firstname")
+    private String firstname="";
     @Expose
-    private String lastname;
-    private String homePhone;
-    private String mobilePhone;
-    private String workPhone;
+    @Column(name = "lastname")
+    private String lastname="";
+    @Column(name = "home")
+    @Type(type = "text")
+    private String homePhone="";
+    @Column(name = "mobile")
+    @Type(type = "text")
+    private String mobilePhone="";
+    @Column(name = "work")
+    @Type(type = "text")
+    private String workPhone="";
+    @Transient
     private String allPhones;
+    @Transient
     private String allEmails;
-    private String email;
-    private String email2;
-    private String email3;
+    @Type(type = "text")
+    private String email="";
+    @Type(type = "text")
+    private String email2="";
+    @Type(type = "text")
+    private String email3="";
     @Expose
-    private String address;
+    @Type(type = "text")
+    private String address="";
+    @Transient
+    private String group;
+    @Transient
     private String detailedInfo;
-    private File photo;
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
 
     public File getPhoto() {
-        return photo;
+        if(photo != null) return new File(photo);
+        else return null;
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
@@ -55,6 +81,15 @@ public class ContactData {
         return address;
     }
 
+    public String getGroup() {
+        return group;
+    }
+
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
+
     public ContactData withAddress(String address) {
         this.address = address;
         return this;
@@ -63,6 +98,57 @@ public class ContactData {
     public ContactData withAllEmails(String allEmails) {
         this.allEmails = allEmails;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", workPhone='" + workPhone + '\'' +
+                ", email='" + email + '\'' +
+                ", email2='" + email2 + '\'' +
+                ", email3='" + email3 + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (id != that.id) return false;
+        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
+        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+        if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
+        if (mobilePhone != null ? !mobilePhone.equals(that.mobilePhone) : that.mobilePhone != null) return false;
+        if (workPhone != null ? !workPhone.equals(that.workPhone) : that.workPhone != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
+        if (email3 != null ? !email3.equals(that.email3) : that.email3 != null) return false;
+        return address != null ? address.equals(that.address) : that.address == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
+        result = 31 * result + (mobilePhone != null ? mobilePhone.hashCode() : 0);
+        result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (email2 != null ? email2.hashCode() : 0);
+        result = 31 * result + (email3 != null ? email3.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        return result;
     }
 
     public ContactData withId(int id) {
@@ -152,33 +238,4 @@ public class ContactData {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ContactData that = (ContactData) o;
-
-        if (id != that.id) return false;
-        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-        return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                '}';
-    }
 }

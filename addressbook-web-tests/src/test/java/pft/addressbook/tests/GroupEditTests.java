@@ -15,7 +15,7 @@ public class GroupEditTests extends TestBase {
     @BeforeMethod
     public void ensurePreconditions(){
         appManager.goTo().groupPage();
-        if (appManager.group().all().size()==0){
+        if (appManager.db().groups().size()==0){
             appManager.group().create(new GroupData().withName("edit group").withHeader("test group header").withFooter("test footer"));
             appManager.group().returnToGroupPage();
         }
@@ -24,12 +24,12 @@ public class GroupEditTests extends TestBase {
     @Test
     public void testEditGroup(){
 
-        Groups before = appManager.group().all();
+        Groups before = appManager.db().groups();
         GroupData editedGroup = before.iterator().next();
         GroupData group = new GroupData().withId(editedGroup.getId()).withName("edit group").withHeader("new header").withFooter("new footer");
         appManager.group().edit(group);
         appManager.group().returnToGroupPage();
-        Groups after = appManager.group().all();
+        Groups after = appManager.db().groups();
 
         assertThat(after, equalTo(before.without(editedGroup).withAdded(group)));
     }

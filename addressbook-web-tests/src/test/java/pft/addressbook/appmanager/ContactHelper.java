@@ -25,6 +25,7 @@ public class ContactHelper extends BaseHelper{
     private void fillContactForm(ContactData contactData, boolean creation) {
         fillUpField(By.name("firstname"),contactData.getFirstname());
         fillUpField(By.name("lastname"),contactData.getLastname());
+        fillUpField(By.name("address"),contactData.getAddress());
         attach(By.name("photo"),contactData.getPhoto());
     }
 
@@ -34,9 +35,10 @@ public class ContactHelper extends BaseHelper{
         wd.switchTo().alert().accept();
     }
 
-    public void editContact(ContactData editContactData) {
-        click(By.xpath("//input[@value='"+editContactData.getId()+"']/../../td/a"));
-        fillContactForm(editContactData,false);
+    public void editContact(ContactData contact) {
+        //click(By.xpath("//input[@value='"+editContactData.getId()+"']/../../td/a"));
+        click(By.cssSelector(String.format("a[href='edit.php?id=%s']",contact.getId())));
+        fillContactForm(contact,false);
         click(By.xpath("//*[@id='content']/form[1]/input[1]"));
     }
 

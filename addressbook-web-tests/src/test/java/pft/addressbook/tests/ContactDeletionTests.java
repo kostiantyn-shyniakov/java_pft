@@ -14,20 +14,22 @@ public class ContactDeletionTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        appManager.goTo().homePage();
-        if (appManager.contact().all().size()==0){
+
+        if (appManager.db().contacts().size()==0){
+            appManager.goTo().homePage();
             appManager.contact().create(new ContactData().withFirstname("Delete").withLastname("Client"));
             appManager.goTo().homePage();
         }
     }
 
     @Test
-    public void testContactDeletion(){
+    public void testContactDeletion() throws InterruptedException {
 
-        Contacts before = appManager.contact().all();
+        Contacts before = appManager.db().contacts();
         ContactData deletedContact = before.iterator().next();
         appManager.contact().deleteContact(deletedContact);
-        Contacts after = appManager.contact().all();
+        Thread.sleep(100);
+        Contacts after = appManager.db().contacts();
 
         assertThat(after, equalTo(before.without(deletedContact)));
     }
