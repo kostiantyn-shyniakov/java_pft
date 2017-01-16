@@ -4,6 +4,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pft.addressbook.model.ContactData;
 import pft.addressbook.model.Contacts;
+import pft.addressbook.model.Groups;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
@@ -14,12 +16,7 @@ public class ContactEditTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-
-        if (appManager.db().contacts().size()==0){
-            appManager.goTo().homePage();
-            appManager.contact().create(new ContactData().withFirstname("Edit").withLastname("Client"));
-            appManager.goTo().homePage();
-        }
+        contactAvailability();
     }
 
     @Test

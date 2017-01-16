@@ -14,12 +14,7 @@ public class ContactDeletionTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-
-        if (appManager.db().contacts().size()==0){
-            appManager.goTo().homePage();
-            appManager.contact().create(new ContactData().withFirstname("Delete").withLastname("Client"));
-            appManager.goTo().homePage();
-        }
+        contactAvailability();
     }
 
     @Test

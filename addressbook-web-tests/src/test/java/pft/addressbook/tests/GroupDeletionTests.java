@@ -2,6 +2,8 @@ package pft.addressbook.tests;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pft.addressbook.model.ContactData;
+import pft.addressbook.model.Contacts;
 import pft.addressbook.model.GroupData;
 import pft.addressbook.model.Groups;
 import static org.hamcrest.CoreMatchers.*;
@@ -14,14 +16,10 @@ public class GroupDeletionTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions(){
-        appManager.goTo().groupPage();
-        if (appManager.db().groups().size()==0){
-            appManager.group().create(new GroupData().withName("delete group").withHeader("test header").withFooter("test footer"));
-            appManager.group().returnToGroupPage();
-        }
+        groupAvailability();
     }
 
-    @Test
+    @Test(enabled = false)
     public void testDeletionGroup(){
 
         Groups before = appManager.db().groups();
@@ -31,5 +29,19 @@ public class GroupDeletionTests extends TestBase {
         Groups after = appManager.db().groups();
 
         assertThat(after, equalTo(before.without(deletedGroup)));
+    }
+
+    @Test
+    public void testDeletionGroupFromContact(){
+        contactAvailability();
+        Contacts before = appManager.db().contacts();
+        ContactData deletedContact = before.iterator().next();
+        GroupData deletedGroup = deletedContact.getGroups().iterator().next();
+        appManager.goTo().homePage();
+        appManager.contact().deleteGroupFromContact(deletedContact, deletedGroup);
+        //Thread.sleep(100);
+        Contacts after = appManager.db().contacts();
+
+        assertThat(after, equalTo(before.without(deletedContact).withAdded(deletedContact.withoutGroup(deletedGroup))));
     }
 }

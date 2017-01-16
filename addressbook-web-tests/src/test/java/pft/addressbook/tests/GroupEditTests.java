@@ -14,11 +14,7 @@ public class GroupEditTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions(){
-        appManager.goTo().groupPage();
-        if (appManager.db().groups().size()==0){
-            appManager.group().create(new GroupData().withName("edit group").withHeader("test group header").withFooter("test footer"));
-            appManager.group().returnToGroupPage();
-        }
+        groupAvailability();
     }
 
     @Test

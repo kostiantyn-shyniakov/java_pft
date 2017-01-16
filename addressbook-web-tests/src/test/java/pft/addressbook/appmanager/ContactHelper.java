@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pft.addressbook.model.ContactData;
 import pft.addressbook.model.Contacts;
+import pft.addressbook.model.GroupData;
+
 import java.util.List;
 
 /**
@@ -26,6 +28,10 @@ public class ContactHelper extends BaseHelper{
         fillUpField(By.name("firstname"),contactData.getFirstname());
         fillUpField(By.name("lastname"),contactData.getLastname());
         fillUpField(By.name("address"),contactData.getAddress());
+        if (creation) {
+            String groupName = contactData.getGroups().iterator().next().getGroupName();
+            wd.findElement(By.xpath("//*[@name='new_group']//option[contains(., \""+groupName+"\")]")).click();
+        }
         attach(By.name("photo"),contactData.getPhoto());
     }
 
@@ -86,5 +92,20 @@ public class ContactHelper extends BaseHelper{
         wd.navigate().back();
         return new ContactData().
                 withId(contact.getId()).withDetailedInfo(detailedInfo);
+    }
+
+    public void deleteGroupFromContact(ContactData contact, GroupData group) {
+        wd.findElement(By.xpath("//*[@name='group']//option[contains(., \""+group.getGroupName()+"\")]")).click();
+        wd.findElement(By.cssSelector("input[value='"+contact.getId()+"']")).click();
+        click(By.name("remove"));
+        click(By.linkText("home"));
+        wd.findElement(By.xpath("//*[@name='group']//option[contains(., \"[all]\")]")).click();
+    }
+
+    public void addGroupToContact(ContactData contact, GroupData group) {
+        wd.findElement(By.cssSelector("input[value='"+contact.getId()+"']")).click();
+        wd.findElement(By.xpath("//*[@name='to_group']//option[contains(., \""+group.getGroupName()+"\")]")).click();
+        click(By.name("add"));
+        click(By.linkText("home"));
     }
 }

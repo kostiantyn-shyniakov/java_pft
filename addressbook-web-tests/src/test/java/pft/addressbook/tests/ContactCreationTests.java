@@ -1,10 +1,12 @@
 package pft.addressbook.tests;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pft.addressbook.model.ContactData;
 import pft.addressbook.model.Contacts;
+import pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,12 +36,18 @@ public class ContactCreationTests extends TestBase {
         return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
     }
 
+    @BeforeMethod
+    public void ensurePreconditions(){
+        groupAvailability();
+    }
+
     @Test(dataProvider = "validContactsFromJson")
     public void testAddNew(ContactData contact) {
+        Groups groups = appManager.db().groups();
+        Contacts before = appManager.db().contacts();
         appManager.goTo().homePage();
-        Contacts before = appManager.contact().all();
-        appManager.contact().create(contact);
-        Contacts after = appManager.contact().all();
+        appManager.contact().create(contact.withGroup(groups.iterator().next()));
+        Contacts after = appManager.db().contacts();
         assertThat(after,equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     }
 
