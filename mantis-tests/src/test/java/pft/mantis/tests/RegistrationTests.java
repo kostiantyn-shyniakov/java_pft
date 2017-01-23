@@ -21,17 +21,32 @@ public class RegistrationTests extends TestBase{
         appManager.mail().start();
     }
 
-    @Test
+
+    @Test(enabled = false)
     public void testRegistration() throws IOException {
         long now = System.currentTimeMillis();
         String email = String.format("user%s@localhost.localdomain", now);
         String user = "user" + now;
         String password = "password";
-        appManager.registration().start(user, email);
+        appManager.registration().start(user, email, "/signup_page.php");
         List<MailMessage> mailMessages = appManager.mail().waitForMail(2, 10000);
         String confirmationLink = findConfirmationLink(mailMessages, email);
         appManager.registration().finish(confirmationLink, password);
         assertTrue(appManager.newSession().login(user, password));
+    }
+
+    @Test
+    public void testChangePassword() throws IOException {
+        String adminLogin = appManager.getProperty("web.adminLogin");
+        String password = appManager.getProperty("web.adminPassword");
+        String newPassword = "54321";
+        appManager.registration().start(adminLogin, password, "/login_page.php");
+        String email = appManager.registration().resetUserPassword();
+        String user = email.split("@")[0];
+        List<MailMessage> mailMessages = appManager.mail().waitForMail(1, 10000);
+        String confirmationLink = findConfirmationLink(mailMessages, email);
+        appManager.registration().finish(confirmationLink, newPassword);
+        assertTrue(appManager.newSession().login(user, newPassword));
     }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {

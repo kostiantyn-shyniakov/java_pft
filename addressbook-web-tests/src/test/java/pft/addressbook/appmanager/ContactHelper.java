@@ -42,7 +42,6 @@ public class ContactHelper extends BaseHelper{
     }
 
     public void editContact(ContactData contact) {
-        //click(By.xpath("//input[@value='"+editContactData.getId()+"']/../../td/a"));
         click(By.cssSelector(String.format("a[href='edit.php?id=%s']",contact.getId())));
         fillContactForm(contact,false);
         click(By.xpath("//*[@id='content']/form[1]/input[1]"));

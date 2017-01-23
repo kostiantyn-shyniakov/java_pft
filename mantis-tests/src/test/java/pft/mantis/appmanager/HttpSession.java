@@ -33,7 +33,7 @@ public class HttpSession {
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", username));
         params.add(new BasicNameValuePair("password", password));
-        params.add(new BasicNameValuePair("secure_session", "on"));
+        params.add(new BasicNameValuePair("secure_session", "off"));
         params.add(new BasicNameValuePair("return", "index.php"));
         post.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse response = httpClient.execute(post);
