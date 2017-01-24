@@ -20,6 +20,7 @@
     <bytecodeTargetLevel target="1.7">
       <module name="addressbook-web-tests" target="" />
       <module name="mantis-tests" target="1.8" />
+      <module name="rest-sample" target="1.8" />
       <module name="soap-sample" target="1.8" />
     </bytecodeTargetLevel>
   </component>
