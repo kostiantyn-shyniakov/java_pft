@@ -39,7 +39,7 @@ public class RegistrationTests extends TestBase{
     public void testChangePassword() throws IOException {
         String adminLogin = appManager.getProperty("web.adminLogin");
         String password = appManager.getProperty("web.adminPassword");
-        String newPassword = "54321";
+        String newPassword = "123545";
         appManager.registration().start(adminLogin, password, "/login_page.php");
         String email = appManager.registration().resetUserPassword();
         String user = email.split("@")[0];
