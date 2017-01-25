@@ -30,6 +30,4 @@ public class RestTests extends TestBase {
         oldIssues.add(newIssue.withId(issueId));
         assertEquals(newIssues, oldIssues);
     }
-
-
 }

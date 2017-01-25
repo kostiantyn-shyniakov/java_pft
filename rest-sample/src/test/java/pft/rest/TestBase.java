@@ -14,6 +14,7 @@ import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -48,9 +49,8 @@ public class TestBase {
     private boolean isIssueOpen(int issueId) throws IOException {
         String json = getExecutor().execute(Request.Get("http://demo.bugify.com/api/issues/"+issueId+".json")).returnContent().asString();
         JsonElement parsed = new JsonParser().parse(json);
-        //JsonElement issue
-        String s= parsed.getAsJsonObject().get("issues").getAsString().g;
-        // = issue.getAsJsonObject().get("state_name").getAsString();
-        return !issue.getAsJsonObject().get("state_name").getAsString().equals("Resolved");
+        JsonElement issueJson = parsed.getAsJsonObject().get("issues");
+        List<Issue> issue = new Gson().fromJson(issueJson, new TypeToken<List<Issue>>(){}.getType());
+        return !issue.get(0).getState_name().equals("Resolved");
     }
 }

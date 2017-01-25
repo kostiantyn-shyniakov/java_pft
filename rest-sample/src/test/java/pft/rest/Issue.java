@@ -8,6 +8,7 @@ public class Issue {
     private int id;
     private String subject;
     private String description;
+    private String state_name;
 
     public int getId() {
         return id;
@@ -31,6 +32,15 @@ public class Issue {
         return description;
     }
 
+    public Issue withDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public String getState_name() {
+        return state_name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,10 +60,5 @@ public class Issue {
         result = 31 * result + (subject != null ? subject.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
-    }
-
-    public Issue withDescription(String description) {
-        this.description = description;
-        return this;
     }
 }
