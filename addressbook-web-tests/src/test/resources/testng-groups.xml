@@ -4,7 +4,7 @@
     <test name="Groups" >
         <classes>
             <class name="pft.addressbook.tests.GroupCreationTests" />
-            <class name="pft.addressbook.tests.ContactEditTests" />
+            <class name="pft.addressbook.tests.GroupDeletionTests" />
             <class name="pft.addressbook.tests.GroupEditTests" />
         </classes>
     </test>

@@ -31,7 +31,7 @@ public class GroupDeletionTests extends TestBase {
         assertThat(after, equalTo(before.without(deletedGroup)));
     }
 
-    @Test
+    @Test(enabled = false)
     public void testDeletionGroupFromContact(){
         contactAvailability();
         Contacts before = appManager.db().contacts();
