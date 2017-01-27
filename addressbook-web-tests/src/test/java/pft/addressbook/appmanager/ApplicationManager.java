@@ -40,6 +40,7 @@ public class ApplicationManager {
 
     public void init() throws IOException {
         String target = System.getProperty("target","local");
+        System.setProperty("webdriver.chrome.driver", "src/test/chromedriver.exe");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties",target))));
         dbHelper = new DbHelper();
 
@@ -55,6 +56,7 @@ public class ApplicationManager {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
             wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
+
         }
 
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
