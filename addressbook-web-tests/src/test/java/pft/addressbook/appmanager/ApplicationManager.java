@@ -40,7 +40,6 @@ public class ApplicationManager {
 
     public void init() throws IOException {
         String target = System.getProperty("target","local");
-        System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties",target))));
         dbHelper = new DbHelper();
 
